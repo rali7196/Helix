@@ -1,11 +1,36 @@
-import testResponse from "../types/testResponse";
+import statusResponse from "../types/responses";
+import { addUserRequest } from "../types/requests";
 
 class ApiClient {
-    static async hitEndpoint(): Promise<testResponse> {
-        const testResponse: testResponse = await fetch(
-            "http://127.0.0.1:5000/test"
-        ).then((response) => response.json());
-        return testResponse;
+    private static apiUrl = import.meta.env.VITE_API_URL;
+    // static async hitEndpoint(): Promise<testResponse> {
+    //     const testResponse: testResponse = await fetch(
+    //         `${ApiClient.apiUrl}/test`
+    //     ).then((response) => response.json());
+    //     return testResponse;
+    // }
+
+    static async addUser(name: string, email: string): Promise<statusResponse | null> {
+        if (name === null || email === null) {
+            return null;
+        }
+
+        const request: addUserRequest = {
+            name: name,
+            email: email
+        }
+
+        const statusResponse: statusResponse = await fetch(
+            `${ApiClient.apiUrl}/api/v1/addUser`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(request)
+            }
+        ).then((response) => response.json())
+        return statusResponse
     }
 }
 
