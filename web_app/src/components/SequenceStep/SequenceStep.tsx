@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import styles from './SequenceStep.module.css';
+import styles from "./SequenceStep.module.css";
 
 interface SequenceStepProps {
     initialContent: string;
-    key: number
+    key: number;
 }
 
 const SequenceStep: React.FC<SequenceStepProps> = ({
     initialContent,
-    key
+    key,
 }: SequenceStepProps) => {
     const [sequenceStepContent, setSequenceStepContent] =
         useState<string>(initialContent);
@@ -18,11 +18,11 @@ const SequenceStep: React.FC<SequenceStepProps> = ({
     }
 
     return (
-        <div key={key} className={styles['sequenceStepContainer']}>
+        <div key={key} className={styles["sequenceStepContainer"]}>
             <input
                 value={sequenceStepContent}
                 onChange={(event) => onChange(event)}
-                className={styles['sequenceStepInput']}
+                className={styles["sequenceStepInput"]}
             ></input>
         </div>
     );

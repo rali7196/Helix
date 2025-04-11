@@ -1,6 +1,10 @@
 @keyframes fadeIn {
-    0% {opacity: 0%;}
-    100% {opacity: 100%;}
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
 }
 
 .padding {
@@ -19,7 +23,6 @@
     flex-direction: column;
     color: white;
     box-shadow: black;
-    
 }
 
 .buttonsContainer {
@@ -39,18 +42,18 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     color: white;
     text-align: center;
-  }
-  
-  .card h1 {
+}
+
+.card h1 {
     font-size: 1.8rem;
-  }
-  
-  .card p {
+}
+
+.card p {
     font-size: 1rem;
     margin-bottom: 1.5rem;
-  }
-  
-  .card .btn {
+}
+
+.card .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     background-color: #06b6d4; /* cyan-500-ish */
@@ -59,11 +62,8 @@
     border-radius: 0.75rem;
     font-weight: bold;
     transition: background-color 0.3s ease;
-  }
-  
-  .card .btn:hover {
+}
+
+.card .btn:hover {
     background-color: #0891b2; /* darker cyan */
-  }
-  
-
-
+}
