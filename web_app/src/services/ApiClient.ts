@@ -24,6 +24,7 @@ class ApiClient {
                 body: JSON.stringify(request)
             }
         ).then((response) => response.json())
+        
         return statusResponse
     }
 }
