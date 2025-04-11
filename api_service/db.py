@@ -1,7 +1,7 @@
     
+import click
 from sqlalchemy import create_engine
 from flask import g
-import click
 
 def get_db():
     if 'engine' not in g:
@@ -10,7 +10,6 @@ def get_db():
 
 @click.command('init-db')
 def init_db_command():
-    """Clear the existing data and create new tables."""
     get_db()
     click.echo('Initialized the database.')
 
