@@ -10,7 +10,7 @@ createRoot(document.getElementById("root")!).render(
             domain="helix-dev123.us.auth0.com"
             clientId="yFyISBN32UmnubyIFlHU1DtnXmZHmw2Y"
             authorizationParams={{
-                redirect_uri: window.location.origin
+                redirect_uri: window.location.origin + "/app"
             }}
         >
             <App />

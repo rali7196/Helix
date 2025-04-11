@@ -3,20 +3,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 import LandingPage from "./pages/LandingPage/LandingPage";
-
-function TempComponent() {
-    return (
-        <>
-            <p>hello!</p>
-        </>
-    );
-}
+import MainPage from "./pages/MainPage/MainPage";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/app" element={<TempComponent />} />
+                <Route path="/app" element={<MainPage />} />
                 <Route path="/" element={<LandingPage />} />
             </Routes>
         </BrowserRouter>
