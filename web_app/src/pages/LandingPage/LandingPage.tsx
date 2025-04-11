@@ -27,18 +27,7 @@ const LandingPage: React.FC = () => {
         }
     }, [vantaEffect]);
 
-    // async function putData(): Promise<null> {
-    //     if (user === null || user === undefined) {
-    //         return null;
-    //     }
 
-    //     const payload: statusResponse | null = await ApiClient.addUser(
-    //         user.name!,
-    //         user.email!
-    //     );
-    //     console.log(payload);
-    //     return null;
-    // }
 
     return (
         <>
@@ -57,9 +46,7 @@ const LandingPage: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                {/* <button onClick={putData}>test endpoint</button>
-            <p>hello</p>
-            <p>{user ? user.email : ""}</p> */}
+
             </div>
         </>
     );

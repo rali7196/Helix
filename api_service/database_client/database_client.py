@@ -1,8 +1,9 @@
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+import uuid
 
 from .. import db
-from ..data_models import User
+from ..data_models.user import User
 
 class Database_Client:
     engine = None
@@ -11,5 +12,5 @@ class Database_Client:
 
     def add_user(self, name: str, email: str):
         with Session(self.engine) as session:
-            new_user = User(company_name = "helix", name = name, email = email)
+            new_user = User(id = uuid.uuid4(), company_name = "helix", name = name, email = email)
             result = session.add(new_user)
