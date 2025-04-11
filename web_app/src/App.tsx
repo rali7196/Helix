@@ -16,7 +16,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<TempComponent />} />
+                <Route path="/app" element={<TempComponent />} />
                 <Route path="/" element={<LandingPage />} />
             </Routes>
         </BrowserRouter>
