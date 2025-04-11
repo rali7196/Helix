@@ -3,12 +3,6 @@ import { addUserRequest } from "../types/requests";
 
 class ApiClient {
     private static apiUrl = import.meta.env.VITE_API_URL;
-    // static async hitEndpoint(): Promise<testResponse> {
-    //     const testResponse: testResponse = await fetch(
-    //         `${ApiClient.apiUrl}/test`
-    //     ).then((response) => response.json());
-    //     return testResponse;
-    // }
 
     static async addUser(name: string, email: string): Promise<statusResponse | null> {
         if (name === null || email === null) {
@@ -21,7 +15,7 @@ class ApiClient {
         }
 
         const statusResponse: statusResponse = await fetch(
-            `${ApiClient.apiUrl}/api/v1/addUser`,
+            `${ApiClient.apiUrl}/userManagement/addUser`,
             {
                 method: "POST",
                 headers: {
