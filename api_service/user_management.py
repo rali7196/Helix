@@ -13,3 +13,10 @@ def add_user():
     database_client.add_user(data['name'], data['email'])
 
     return jsonify({"responseCode": 0})
+
+@bp.route('/getUser', methods=["POST"])
+def get_user():
+    data = request.get_json()
+    database_client = Database_Client()
+    user = database_client.get_user_by_email(data['email'])
+    return jsonify({"responseCode": 0})

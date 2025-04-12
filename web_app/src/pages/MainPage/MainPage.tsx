@@ -1,17 +1,15 @@
 import styles from "./MainPage.module.css";
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
 import SequenceStep from "../../components/SequenceStep/SequenceStep";
 import { useAuth0 } from "@auth0/auth0-react";
-import statusResponse from "../../types/responses";
+import { statusResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import { CircularProgress } from "@mui/material";
 import ChatInterface from "../../components/ChatInterface/ChatInterface";
 
 const MainPage: React.FC = () => {
-    const {user, getIdTokenClaims} = useAuth0();
-
+    const { user, getIdTokenClaims } = useAuth0();
 
     const [sequenceSteps, setSequenceSteps] = useState<string[] | null>([
         "test",
@@ -25,8 +23,7 @@ const MainPage: React.FC = () => {
             return null;
         }
 
-        const payload: statusResponse | null = await ApiClient.addUser(
-            user.name!,
+        const payload: statusResponse | null = await ApiClient.getUser(
             user.email!
         );
 
@@ -36,51 +33,31 @@ const MainPage: React.FC = () => {
 
     useEffect(() => {
         if (user === null || user === undefined) {
-            return
+            return;
         }
 
         const addNewUserToDB: () => Promise<void> = async () => {
-            const claims = await getIdTokenClaims()
-            console.log("claims:", claims)
-            console.log("login count: ", claims?.["https://helix.dev/logins_count"])
-            const loginCount: number = claims?.["https://helix.dev/logins_count"]
+            const claims = await getIdTokenClaims();
+            console.log("claims:", claims);
+            console.log(
+                "login count: ",
+                claims?.["https://helix.dev/logins_count"]
+            );
+            const loginCount: number =
+                claims?.["https://helix.dev/logins_count"];
 
             if (loginCount === 1) {
                 const payload: statusResponse | null = await ApiClient.addUser(
                     user.name!,
                     user.email!
                 );
-                console.log(payload)
+                console.log(payload);
             }
-            setIsLoading(false)
-        }
+            setIsLoading(false);
+        };
 
-        addNewUserToDB()
-
-    }, [getIdTokenClaims, user])
-
-    function renderChat() {
-        return (
-            <div className={styles["textFieldContainer"]}>
-                <TextField
-                    variant="outlined"
-                    className={styles["textField"]}
-                    onChange={(event) => {
-                        setCurrentMessage(event.target.value);
-                    }}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                            setMessages([...messages, currentMessage]);
-                            setCurrentMessage("");
-                        }
-                    }}
-                    value={currentMessage}
-                />
-            </div>
-        );
-    }
-
-
+        addNewUserToDB();
+    }, [getIdTokenClaims, user]);
 
     function renderSequenceSteps() {
         return (
@@ -92,21 +69,19 @@ const MainPage: React.FC = () => {
         );
     }
 
-
-
     if (isLoading) {
         return (
-            <CircularProgress style={{color:"grey", margin: "25% 50%"}}/>
-        )
+            <CircularProgress style={{ color: "grey", margin: "25% 50%" }} />
+        );
     }
 
     return (
         <div className={styles["padding"]}>
             <button onClick={putData}>test endpoint</button>
-            <LogoutButton/>
+            <LogoutButton />
 
             <div className={styles["mainContainer"]}>
-                <ChatInterface/>
+                <ChatInterface />
 
                 <div className={styles["workspaceContainer"]}>
                     {renderSequenceSteps()}

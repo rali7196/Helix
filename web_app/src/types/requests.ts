@@ -3,4 +3,8 @@ interface addUserRequest {
     email: string;
 }
 
-export type {addUserRequest}
+interface getUserRequest {
+    email: string
+}
+
+export type {addUserRequest, getUserRequest}

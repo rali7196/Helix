@@ -9,3 +9,9 @@ class User(Base):
     company_name: Mapped[Optional[str]] = mapped_column(String())
     email: Mapped[str] = mapped_column(String())
     name: Mapped[str] = mapped_column(String())
+
+    def to_dictionary(self):
+        return {"id": self.id, 
+                "company_name": self.company_name, 
+                "email": self.email, 
+                "name": self.name}
