@@ -13,4 +13,5 @@ class Database_Client:
     def add_user(self, name: str, email: str):
         with Session(self.engine) as session:
             new_user = User(id = uuid.uuid4(), company_name = "helix", name = name, email = email)
-            result = session.add(new_user)
+            session.add(new_user)
+            session.commit()

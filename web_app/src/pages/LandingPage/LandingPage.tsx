@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useRef, useState } from "react";
-import LoginButton from "../../components/LoginButton/LoginButton";
 import styles from "./LandingPage.module.css";
 import HALO from "vanta/dist/vanta.halo.min.js";
 import * as THREE from "three";
