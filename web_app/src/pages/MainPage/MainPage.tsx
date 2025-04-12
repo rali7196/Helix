@@ -7,19 +7,17 @@ import statusResponse from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import { CircularProgress } from "@mui/material";
+import ChatInterface from "../../components/ChatInterface/ChatInterface";
 
 const MainPage: React.FC = () => {
     const {user, getIdTokenClaims} = useAuth0();
 
-    const [messages, setMessages] = useState<string[] | null>([
-        "Hey there! How can I help you?",
-    ]);
+
     const [sequenceSteps, setSequenceSteps] = useState<string[] | null>([
         "test",
         "123456",
         "hey! what's up",
     ]);
-    const [currentMessage, setCurrentMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     async function putData(): Promise<null> {
@@ -82,20 +80,7 @@ const MainPage: React.FC = () => {
         );
     }
 
-    function renderMessage(value: string, key: number) {
-        return (
-            <div
-                className={styles["message"]}
-                style={
-                    key % 2 === 0
-                        ? { marginRight: "auto", marginLeft: "10px" }
-                        : { marginLeft: "auto", marginRight: "10px" }
-                }
-            >
-                <p>{value}</p>
-            </div>
-        );
-    }
+
 
     function renderSequenceSteps() {
         return (
@@ -121,14 +106,8 @@ const MainPage: React.FC = () => {
             <LogoutButton/>
 
             <div className={styles["mainContainer"]}>
-                <div className={styles["chatContainer"]}>
-                    <div className={styles["messagesContainer"]}>
-                        {messages?.map((value: string, index: number) =>
-                            renderMessage(value, index)
-                        )}
-                    </div>
-                    {renderChat()}
-                </div>
+                <ChatInterface/>
+
                 <div className={styles["workspaceContainer"]}>
                     {renderSequenceSteps()}
                 </div>
