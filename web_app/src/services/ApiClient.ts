@@ -1,5 +1,5 @@
-import { statusResponse, userResponse } from "../types/responses";
-import { addUserRequest, getUserRequest } from "../types/requests";
+import { chatResponse, statusResponse, userResponse } from "../types/responses";
+import { addUserRequest, chatRequest, getUserRequest } from "../types/requests";
 
 class ApiClient {
     private static apiUrl = import.meta.env.VITE_API_URL;
@@ -49,7 +49,33 @@ class ApiClient {
                 },
                 body: JSON.stringify(request),
             }
-        ).then((response) => response.json);
+        ).then((response) => response.json());
+
+        return response;
+    }
+
+    static async chat(conversation: string[], steps: string[]): Promise<chatResponse | null> {
+        if (conversation === null || conversation === undefined ||
+            steps === null || steps === undefined
+        ) {
+            return null;
+        }
+
+        const request: chatRequest = {
+            conversation: conversation,
+            steps: steps
+        };
+
+        const response: chatResponse = await fetch(
+            `${ApiClient.apiUrl}/llmManagement/chat`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(request),
+            }
+        ).then((response) => response.json());
 
         return response;
     }

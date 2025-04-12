@@ -38,13 +38,19 @@
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
-    width: 40%;
+    max-width: 60%;
     animation: fadeIn 0.3s forwards 0.2s;
     opacity: 0%;
     font-family: sans-serif;
     font-size: small;
     border: 1px solid white;
     color: white;
+    min-height: 2rem;
+}
+
+.message.loadingMessage {
+    align-items: center;
+    justify-content: center;
 }
 
 .message p {

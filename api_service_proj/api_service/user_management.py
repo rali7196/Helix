@@ -11,7 +11,6 @@ def add_user():
     print(data)
     database_client = Database_Client()
     database_client.add_user(data['name'], data['email'])
-
     return jsonify({"responseCode": 0})
 
 @bp.route('/getUser', methods=["POST"])

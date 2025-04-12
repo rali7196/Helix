@@ -2,12 +2,33 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 
 import styles from "./ChatInterface.module.css";
+import { chatResponse } from "../../types/responses";
+import ApiClient from "../../services/ApiClient";
+import { CircularProgress } from "@mui/material";
 
-const ChatInterface: React.FC = () => {
-    const [messages, setMessages] = useState<string[] | null>([
-        "Hey there! How can I help you?",
-    ]);
-    const [currentMessage, setCurrentMessage] = useState<string | null>(null);
+interface ChatInterfaceProps {
+    messages: string[];
+    steps: string[];
+    setMessages: React.Dispatch<string[]>;
+    setSteps: React.Dispatch<string[]>;
+}
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({
+    messages,
+    steps,
+    setMessages,
+    setSteps,
+}: ChatInterfaceProps) => {
+    const [currentMessage, setCurrentMessage] = useState<string>("");
+    const [waitingForResponse, setWaitingForResponse] =
+        useState<boolean>(false);
+
+    async function sendMessage(): Promise<null> {
+        const payload: chatResponse | null = ApiClient.chat(messages, steps);
+
+        console.log(payload);
+        return null;
+    }
 
     function renderChat() {
         return (
@@ -19,7 +40,25 @@ const ChatInterface: React.FC = () => {
                         setCurrentMessage(event.target.value);
                     }}
                     onKeyDown={(event) => {
-                        if (event.key === "Enter") {
+                        if (
+                            event.key === "Enter" &&
+                            currentMessage.length > 0
+                        ) {
+                            console.log(currentMessage);
+                            const mostRecentConversation: string[] = [
+                                ...messages,
+                                currentMessage,
+                            ];
+                            setMessages(mostRecentConversation);
+                            setWaitingForResponse(true);
+                            ApiClient.chat(messages, steps).then((response) => {
+                                setMessages([
+                                    ...mostRecentConversation,
+                                    response!.conversation,
+                                ]);
+                                setSteps(response!.steps);
+                                setWaitingForResponse(false);
+                            });
                             setMessages([...messages, currentMessage]);
                             setCurrentMessage("");
                         }
@@ -51,6 +90,16 @@ const ChatInterface: React.FC = () => {
                 {messages?.map((value: string, index: number) =>
                     renderMessage(value, index)
                 )}
+                <div
+                    className={`${styles["message"]} ${styles["loadingMessage"]}`}
+                    style={
+                        waitingForResponse
+                            ? { display: "flex" }
+                            : { display: "none" }
+                    }
+                >
+                    <CircularProgress style={{ color: "gray" }} size="20px" />
+                </div>
             </div>
             {renderChat()}
         </div>

@@ -7,4 +7,9 @@ interface getUserRequest {
     email: string
 }
 
-export type {addUserRequest, getUserRequest}
+interface chatRequest {
+    conversation: string[]
+    steps: string[]
+}
+
+export type {addUserRequest, getUserRequest, chatRequest}

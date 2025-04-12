@@ -9,4 +9,8 @@ interface userResponse {
     name: string
 }
 
-export type {statusResponse, userResponse}
+interface chatResponse {
+    conversation: string
+    steps: string[]
+}
+export type {statusResponse, userResponse, chatResponse}

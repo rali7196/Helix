@@ -1,2 +1,4 @@
 .vscode/
 helixDB.session.sql
+.venv/
+__pycache__/

@@ -11,25 +11,15 @@ import ChatInterface from "../../components/ChatInterface/ChatInterface";
 const MainPage: React.FC = () => {
     const { user, getIdTokenClaims } = useAuth0();
 
-    const [sequenceSteps, setSequenceSteps] = useState<string[] | null>([
+    const [messages, setMessages] = useState<string[]>([]);
+    const [steps, setSteps] = useState<string[]>([]);
+
+    const [sequenceSteps, setSequenceSteps] = useState<string[]>([
         "test",
         "123456",
         "hey! what's up",
     ]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    async function putData(): Promise<null> {
-        if (user === null || user === undefined) {
-            return null;
-        }
-
-        const payload: statusResponse | null = await ApiClient.getUser(
-            user.email!
-        );
-
-        console.log(payload);
-        return null;
-    }
 
     useEffect(() => {
         if (user === null || user === undefined) {
@@ -77,11 +67,16 @@ const MainPage: React.FC = () => {
 
     return (
         <div className={styles["padding"]}>
-            <button onClick={putData}>test endpoint</button>
+            <button>test endpoint</button>
             <LogoutButton />
 
             <div className={styles["mainContainer"]}>
-                <ChatInterface />
+                <ChatInterface
+                    messages={messages}
+                    steps={steps}
+                    setMessages={setMessages}
+                    setSteps={setSteps}
+                />
 
                 <div className={styles["workspaceContainer"]}>
                     {renderSequenceSteps()}

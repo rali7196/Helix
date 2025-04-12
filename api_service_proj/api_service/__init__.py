@@ -1,8 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from . import db
-from . import user_management
+from . import db, user_management, llm_management
 
 
 def create_app():
@@ -11,5 +10,7 @@ def create_app():
 
     db.init_db(app)
     app.register_blueprint(user_management.bp)
+    app.register_blueprint(llm_management.bp)
+
     
     return app

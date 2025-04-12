@@ -1,7 +1,0 @@
-{
-  "devDependencies": {
-    "react-router": "^7.5.0",
-    "react-router-dom": "^7.5.0",
-    "vanta": "^0.5.24"
-  }
-}
