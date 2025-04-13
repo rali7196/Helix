@@ -54,16 +54,17 @@ class ApiClient {
         return response;
     }
 
-    static async chat(conversation: string[], steps: string[]): Promise<chatResponse | null> {
-        if (conversation === null || conversation === undefined ||
-            steps === null || steps === undefined
-        ) {
+    static async chat(
+        conversation: string[],
+        steps: string[]
+    ): Promise<chatResponse | null> {
+        if (conversation == null) {
             return null;
         }
 
         const request: chatRequest = {
             conversation: conversation,
-            steps: steps
+            steps: steps,
         };
 
         const response: chatResponse = await fetch(

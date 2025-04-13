@@ -10,7 +10,7 @@ interface userResponse {
 }
 
 interface chatResponse {
-    conversation: string
+    newMessage: string
     steps: string[]
 }
 export type {statusResponse, userResponse, chatResponse}

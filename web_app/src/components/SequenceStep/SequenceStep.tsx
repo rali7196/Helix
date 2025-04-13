@@ -19,11 +19,13 @@ const SequenceStep: React.FC<SequenceStepProps> = ({
 
     return (
         <div key={key} className={styles["sequenceStepContainer"]}>
-            <input
+            <textarea
                 value={sequenceStepContent}
                 onChange={(event) => onChange(event)}
                 className={styles["sequenceStepInput"]}
-            ></input>
+                rows={4}
+                cols={100}
+            ></textarea>
         </div>
     );
 };

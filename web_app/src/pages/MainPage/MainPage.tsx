@@ -14,11 +14,6 @@ const MainPage: React.FC = () => {
     const [messages, setMessages] = useState<string[]>([]);
     const [steps, setSteps] = useState<string[]>([]);
 
-    const [sequenceSteps, setSequenceSteps] = useState<string[]>([
-        "test",
-        "123456",
-        "hey! what's up",
-    ]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -52,7 +47,7 @@ const MainPage: React.FC = () => {
     function renderSequenceSteps() {
         return (
             <>
-                {sequenceSteps?.map((value: string, index: number) => (
+                {steps?.map((value: string, index: number) => (
                     <SequenceStep initialContent={value} key={index} />
                 ))}
             </>
