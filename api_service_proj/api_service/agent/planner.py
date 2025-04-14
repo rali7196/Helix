@@ -24,12 +24,12 @@ class Planner:
             Rules:
             - If required info is missing, respond with one question to get it.
             - If most of the known information dictionary is filled out, generate the next step (e.g. intro, follow-up, bump).
-            - If the sequence is complete, say you're done.
+            - If there are any sequence steps generated, take some extra time to consider whether you need to actually generate a new sequence or just edit the current one
 
             Always reply in this JSON format:
             {{
             "newMessage": "...",
-            "action": "ask_user" | "generate_steps" | "edit step"",
+            "action": "ask_user" | "generate_steps" | "edit_steps"",
             }}
             """
         

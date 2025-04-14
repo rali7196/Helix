@@ -73,7 +73,7 @@ class Executor:
 
         ```json
         {{
-            "new_message": string
+            "newMessage": string
             "steps": [
                 "Step 1 message here...",
                 "Step 2 message here...",
@@ -90,3 +90,52 @@ class Executor:
         parsed_llm_response = Utils.extract_json_from_text(llm_response.output_text)
 
         return parsed_llm_response
+    
+    def edit_steps(self):
+        prompt = f"""
+            You are an expert assistant helping recruiters craft high-converting outreach sequences.
+
+            You will be given:
+            - The current conversation with the user
+            - An existing outreach sequence 
+            - An updated `known_info` object with more accurate or complete information
+
+            Conversation so far:
+            {self.helixAgent.conversation}
+
+            Sequence steps generated so far:
+            {self.helixAgent.sequence}
+
+            Known info:
+            {json.dumps(self.helixAgent.known_info, indent=2)}
+
+            Your job is to first identify what the user wants changed, and then 
+            revise the outreach sequence using the updated `known_info`. You can:
+            - Reword steps to improve tone, clarity, or personalization
+            - Add or remove relevant selling points
+            - Adjust tone to match `desired_tone`
+            - Preserve the general intent and flow of the original sequence unless something needs to change
+
+            Please return only a JSON object with the updated list of steps, as well as a message to 
+            the user, in newMessage, indicating you have edited the sequence in this format:
+
+            ```json
+            {{
+                "steps": [
+                    "Revised Step 1...",
+                    "Revised Step 2...",
+                    ...
+                ]
+                newMessage: string
+            }}
+            """
+        llm_response = self.helixAgent.client.responses.create(
+            model="gpt-4o",
+            input=prompt
+        )
+
+        parsed_llm_response = Utils.extract_json_from_text(llm_response.output_text)
+
+        return parsed_llm_response
+
+

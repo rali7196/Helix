@@ -110,12 +110,11 @@ class HelixAgent:
                 if (next_action == "generate_steps"):
                     response = self.executor.generate_steps()
                     return response
-                # TODO: add action if user wants to edit the recruiting sequence
 
+                if (next_action == "edit_steps"):
+                    response = self.executor.edit_steps()
+                    return response
 
-
-                plan_response = self.plan()
-                Utils.extract_json_from_text(plan_response)
                 
             except Exception as e:
                 print(e)

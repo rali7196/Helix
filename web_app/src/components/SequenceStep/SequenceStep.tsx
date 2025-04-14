@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SequenceStep.module.css";
+import { TextField } from "@mui/material";
 
 interface SequenceStepProps {
-    initialContent: string;
     key: number;
+    setSteps: React.Dispatch<string[]>;
+    steps: string[];
+    content: string;
 }
 
 const SequenceStep: React.FC<SequenceStepProps> = ({
-    initialContent,
     key,
+    setSteps,
+    steps,
+    content,
 }: SequenceStepProps) => {
-    const [sequenceStepContent, setSequenceStepContent] =
-        useState<string>(initialContent);
+    const [textAreaValue, setTextAreaValue] = useState<string>(content);
+    const myKey = key;
 
-    function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setSequenceStepContent(event.target.value);
+    function modifySequenceStep(key: number, newValue: string) {
+        const temp: string[] = [...steps];
+        temp[key] = newValue;
+        setSteps(temp);
+        setTextAreaValue(newValue);
     }
+
+    useEffect(() => {
+        setTextAreaValue(content);
+    }, [content]);
 
     return (
         <div key={key} className={styles["sequenceStepContainer"]}>
             <textarea
-                value={sequenceStepContent}
-                onChange={(event) => onChange(event)}
+                value={textAreaValue}
+                onChange={(event) =>
+                    modifySequenceStep(key, event.target.value)
+                }
                 className={styles["sequenceStepInput"]}
                 rows={4}
                 cols={100}

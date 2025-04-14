@@ -47,8 +47,13 @@ const MainPage: React.FC = () => {
     function renderSequenceSteps() {
         return (
             <>
-                {steps?.map((value: string, index: number) => (
-                    <SequenceStep initialContent={value} key={index} />
+                {steps.map((value: string, index: number) => (
+                    <SequenceStep
+                        key={index}
+                        setSteps={setSteps}
+                        steps={steps}
+                        content={value}
+                    />
                 ))}
             </>
         );

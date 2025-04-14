@@ -1,4 +1,4 @@
-import { chatResponse, statusResponse, userResponse } from "../types/responses";
+import { chatResponse, statusResponse } from "../types/responses";
 import { addUserRequest, chatRequest, getUserRequest } from "../types/requests";
 
 class ApiClient {

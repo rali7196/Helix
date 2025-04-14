@@ -5,8 +5,6 @@ import styles from "./ChatInterface.module.css";
 import { chatResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import { CircularProgress } from "@mui/material";
-import { cachedDataVersionTag } from "v8";
-
 interface ChatInterfaceProps {
     messages: string[];
     steps: string[];
@@ -48,21 +46,23 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                             setWaitingForResponse(true);
                             setCurrentMessage("");
 
-                            ApiClient.chat(mostRecentConversation, steps).then((response: chatResponse | null) => {
-                                if (response == null) {
-                                    // TODO: Show alert saying that chat request failed
-                                    console.log("request failed")
-                                    return
-                                }
+                            ApiClient.chat(mostRecentConversation, steps).then(
+                                (response: chatResponse | null) => {
+                                    if (response == null) {
+                                        // TODO: Show alert saying that chat request failed
+                                        console.log("request failed");
+                                        return;
+                                    }
 
-                                console.log(response)
-                                setMessages([
-                                    ...mostRecentConversation,
-                                    response.newMessage,
-                                ]);
-                                setSteps(response!.steps);
-                                setWaitingForResponse(false);
-                            });
+                                    console.log(response.steps);
+                                    setMessages([
+                                        ...mostRecentConversation,
+                                        response.newMessage,
+                                    ]);
+                                    setSteps(response.steps);
+                                    setWaitingForResponse(false);
+                                }
+                            );
                         }
                     }}
                     value={currentMessage}
