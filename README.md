@@ -1,7 +1,7 @@
 # Helix
 
 This is my submission for the take home project for Sellscale.ai. Please look at the README files in the
-web_app, database, and api_service_proj directories for information on how to set them up. 
+web_app, database, and api_service_proj directories for information on how to set them up. Note that the instructions are meant for a unix machine. i.e., Ubuntu 22.04 or MacOS
 
 # Planned Features
 
