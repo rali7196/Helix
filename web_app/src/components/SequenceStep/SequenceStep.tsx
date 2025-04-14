@@ -9,6 +9,7 @@ interface SequenceStepProps {
     content: string;
     sessionId: RefObject<string>;
     conversation: string[];
+    showAlert: React.Dispatch<boolean>
 }
 
 const SequenceStep: React.FC<SequenceStepProps> = ({
@@ -18,6 +19,7 @@ const SequenceStep: React.FC<SequenceStepProps> = ({
     content,
     sessionId,
     conversation,
+    showAlert
 }: SequenceStepProps) => {
     const [textAreaValue, setTextAreaValue] = useState<string>(content);
     const timeoutIdRef = useRef(undefined)
@@ -31,7 +33,8 @@ const SequenceStep: React.FC<SequenceStepProps> = ({
         clearTimeout(timeoutIdRef.current);
         timeoutIdRef.current = setTimeout(() => {
             ApiClient.updateSequence(sessionId.current, temp, conversation)
-        }, 1000);
+            showAlert(true)
+        }, 750);
     }
 
     useEffect(() => {

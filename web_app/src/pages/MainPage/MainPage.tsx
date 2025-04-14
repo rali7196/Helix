@@ -5,14 +5,15 @@ import { useAuth0, User } from "@auth0/auth0-react";
 import { statusResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Snackbar } from "@mui/material";
 import ChatInterface from "../../components/ChatInterface/ChatInterface";
 
 const MainPage: React.FC = () => {
-    const { user, getIdTokenClaims } = useAuth0();
+    const { user, getIdTokenClaims, logout } = useAuth0();
 
     const [messages, setMessages] = useState<string[]>([]);
     const [steps, setSteps] = useState<string[]>([]);
+    const [showAlert, setShowAlert] = useState(false);
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const sessionIdRef = useRef("");
@@ -67,14 +68,15 @@ const MainPage: React.FC = () => {
         return (
             <>
                 {steps.map((value: string, index: number) => (
-                        <SequenceStep
-                            index={index}
-                            setSteps={setSteps}
-                            steps={steps}
-                            content={value}
-                            conversation={messages}
-                            sessionId={sessionIdRef}
-                        />
+                    <SequenceStep
+                        index={index}
+                        setSteps={setSteps}
+                        steps={steps}
+                        content={value}
+                        conversation={messages}
+                        sessionId={sessionIdRef}
+                        showAlert={() => setShowAlert(true)}
+                    />
                 ))}
             </>
         );
@@ -88,8 +90,28 @@ const MainPage: React.FC = () => {
 
     return (
         <div className={styles["padding"]}>
-            <button>test endpoint</button>
-            <LogoutButton />
+            <Snackbar
+                open={showAlert}
+                message={"Changes Saved!"}
+                autoHideDuration={1000}
+                onClose={() => setShowAlert(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            />
+
+            <Button
+                variant="contained"
+                onClick={() =>
+                    logout({
+                        logoutParams: { returnTo: window.location.origin },
+                    })
+                }
+                style={{
+                    color:"white",
+                    backgroundColor:"grey"
+                }}
+            >
+                Log Out
+            </Button>
 
             <div className={styles["mainContainer"]}>
                 <ChatInterface
