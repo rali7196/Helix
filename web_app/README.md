@@ -22,7 +22,7 @@ this command
 npm i
 ```
 
-Finally, you can run the web app by runnnig this command
+Finally, you can run the web app by runnning this command
 
 ```
 npm run dev

@@ -21,8 +21,18 @@ Then, you need to export an open AI api key in your .bashrc like so:
 ```
 export OPENAI_API_KEY=<api key>
 ```
+And then you have to restart your terminal.
 
-Then, if you aren't already, install python 3.9.1 (later versions should be fine, but if you get any weird errors this could be a starting point). navigate the the /api_service_proj folder in your terminal.
+
+Then, if you aren't already, install python 3.9 with the following commands:
+```
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.9 python3.9-venv python3.9-dev
+```
+
+
+navigate the the /api_service_proj folder in your terminal.
 There, you need to create a pip virtual environment, activate it, and install all the dependencies
 with these commands:
 
