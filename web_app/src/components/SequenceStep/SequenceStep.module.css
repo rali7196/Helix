@@ -1,3 +1,14 @@
+@keyframes popIn {
+    0% {
+        opacity: 0%;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 100%;
+        transform: translateY(0px);
+    }
+}
+
 .sequenceStepContainer {
     display: flex;
     background-color: white;
@@ -6,6 +17,8 @@
     border-radius: 5px;
     box-shadow: 10px 8px 12px rgb(0 0 0 / 60%);
     border: 2px solid #8b8282;
+    opacity: 0%;
+    animation: popIn 0.3s forwards 0.3s;
 }
 
 .sequenceStepInput {

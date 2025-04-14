@@ -31,6 +31,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                     onChange={(event) => {
                         setCurrentMessage(event.target.value);
                     }}
+                    placeholder={
+                        waitingForResponse
+                            ? "Please wait..."
+                            : "Enter your message here..."
+                    }
+                    disabled={waitingForResponse}
                     onKeyDown={(event) => {
                         if (
                             event.key === "Enter" &&
