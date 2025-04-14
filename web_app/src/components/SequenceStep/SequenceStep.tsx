@@ -16,7 +16,6 @@ const SequenceStep: React.FC<SequenceStepProps> = ({
     content,
 }: SequenceStepProps) => {
     const [textAreaValue, setTextAreaValue] = useState<string>(content);
-    const myKey = key;
 
     function modifySequenceStep(key: number, newValue: string) {
         const temp: string[] = [...steps];
