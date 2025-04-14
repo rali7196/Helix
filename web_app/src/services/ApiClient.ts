@@ -13,10 +13,7 @@ import {
 import { User } from "@auth0/auth0-react";
 
 class ApiClient {
-    // set this to true to use the docker container IP address
-    private static apiUrl = false
-        ? import.meta.env.VITE_API_URL
-        : "http://127.0.0.1:5000";
+    private static apiUrl = import.meta.env.VITE_API_URL
 
     static async addUser(
         name: string,
