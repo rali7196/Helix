@@ -1,38 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 import styles from "./SequenceStep.module.css";
+import ApiClient from "../../services/ApiClient";
 
 interface SequenceStepProps {
-    key: number;
+    index: number;
     setSteps: React.Dispatch<string[]>;
     steps: string[];
     content: string;
+    sessionId: RefObject<string>;
+    conversation: string[];
 }
 
 const SequenceStep: React.FC<SequenceStepProps> = ({
-    key,
+    index,
     setSteps,
     steps,
     content,
+    sessionId,
+    conversation,
 }: SequenceStepProps) => {
     const [textAreaValue, setTextAreaValue] = useState<string>(content);
+    const timeoutIdRef = useRef(undefined)
 
     function modifySequenceStep(key: number, newValue: string) {
         const temp: string[] = [...steps];
         temp[key] = newValue;
         setSteps(temp);
         setTextAreaValue(newValue);
+        console.log(key)
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = setTimeout(() => {
+            ApiClient.updateSequence(sessionId.current, temp, conversation)
+        }, 1000);
     }
 
     useEffect(() => {
         setTextAreaValue(content);
+
     }, [content]);
 
     return (
-        <div key={key} className={styles["sequenceStepContainer"]}>
+        <div key={index} className={styles["sequenceStepContainer"]}>
             <textarea
                 value={textAreaValue}
                 onChange={(event) =>
-                    modifySequenceStep(key, event.target.value)
+                    modifySequenceStep(index, event.target.value)
                 }
                 className={styles["sequenceStepInput"]}
                 rows={4}

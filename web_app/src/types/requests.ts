@@ -11,10 +11,11 @@ interface chatRequest {
     conversation: string[];
     steps: string[];
     email: string;
+    id?: string
 }
 
 interface helixSessionRequest {
-    email: string
+    email: string;
 }
 
 export type {

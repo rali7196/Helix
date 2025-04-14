@@ -1,5 +1,6 @@
 from flask import (g, jsonify, request, Blueprint)
 from sqlalchemy import text
+from sqlalchemy.orm import Session
 
 from . import db
 from .database_client.database_client import Database_Client
@@ -30,3 +31,14 @@ def get_helix_session():
                     "user_id":session.user_id, 
                     "conversation_history":session.conversation_history, 
                     "steps":session.outreach_sequence})
+
+@bp.route('/updateSequence', methods=['POST'])
+def update_sequence():
+    data = request.get_json()
+
+    database_client = Database_Client()
+    with Session(database_client.engine):
+        database_client.update_session(data['id'], data['conversation'], data['steps'])
+    return jsonify({"responseCode": 0})
+
+

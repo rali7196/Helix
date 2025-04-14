@@ -14,7 +14,9 @@ import { User } from "@auth0/auth0-react";
 
 class ApiClient {
     // set this to true to use the docker container IP address
-    private static apiUrl = false ? import.meta.env.VITE_API_URL : "http://127.0.0.1:5000";
+    private static apiUrl = false
+        ? import.meta.env.VITE_API_URL
+        : "http://127.0.0.1:5000";
 
     static async addUser(
         name: string,
@@ -62,6 +64,27 @@ class ApiClient {
                 body: JSON.stringify(request),
             }
         ).then((response) => response.json());
+
+        return response;
+    }
+
+    static async updateSequence(id, steps, conversation) {
+        const request: chatRequest = {
+            id: id,
+            steps: steps,
+            conversation: conversation,
+        };
+        console.log(request.steps)
+        const response = await fetch(`${ApiClient.apiUrl}/userManagement/updateSequence`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request),
+        }).then((response) => {
+            console.log("success");
+            return response.json();
+        });
 
         return response;
     }

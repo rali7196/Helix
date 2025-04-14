@@ -1,5 +1,3 @@
-import { HelixSession } from "./complex_types";
-
 interface statusResponse {
     responseCode: number;
 }

@@ -11,7 +11,7 @@ interface ChatInterfaceProps {
     steps: string[];
     setMessages: React.Dispatch<string[]>;
     setSteps: React.Dispatch<string[]>;
-    user: User | undefined
+    user: User | undefined;
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -19,13 +19,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     steps,
     setMessages,
     setSteps,
-    user
+    user,
 }: ChatInterfaceProps) => {
     const [currentMessage, setCurrentMessage] = useState<string>("");
     const [waitingForResponse, setWaitingForResponse] =
         useState<boolean>(false);
 
-    const initialMessage: string = "Hi! I'm Helix, an agent designed to help you generate recruiting outreach sequences. Please tell me about the role you are trying to hire for."
+    const initialMessage: string =
+        "Hi! I'm Helix, an agent designed to help you generate recruiting outreach sequences. Please tell me about the role you are trying to hire for.";
+
+
 
     function renderChat() {
         return (
@@ -57,23 +60,25 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                             setWaitingForResponse(true);
                             setCurrentMessage("");
 
-                            ApiClient.chat(mostRecentConversation, steps, user).then(
-                                (response: chatResponse | null) => {
-                                    if (response == null) {
-                                        // TODO: Show alert saying that chat request failed
-                                        console.log("request failed");
-                                        return;
-                                    }
-
-                                    console.log(response.steps);
-                                    setMessages([
-                                        ...mostRecentConversation,
-                                        response.newMessage,
-                                    ]);
-                                    setSteps(response.steps);
-                                    setWaitingForResponse(false);
+                            ApiClient.chat(
+                                mostRecentConversation,
+                                steps,
+                                user
+                            ).then((response: chatResponse | null) => {
+                                if (response == null) {
+                                    // TODO: Show alert saying that chat request failed
+                                    console.log("request failed");
+                                    return;
                                 }
-                            );
+
+                                console.log(response.steps);
+                                setMessages([
+                                    ...mostRecentConversation,
+                                    response.newMessage,
+                                ]);
+                                setSteps(response.steps);
+                                setWaitingForResponse(false);
+                            });
                         }
                     }}
                     value={currentMessage}

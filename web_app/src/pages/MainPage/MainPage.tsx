@@ -1,5 +1,5 @@
 import styles from "./MainPage.module.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SequenceStep from "../../components/SequenceStep/SequenceStep";
 import { useAuth0, User } from "@auth0/auth0-react";
 import { statusResponse } from "../../types/responses";
@@ -15,6 +15,7 @@ const MainPage: React.FC = () => {
     const [steps, setSteps] = useState<string[]>([]);
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const sessionIdRef = useRef("");
 
     useEffect(() => {
         if (user === null || user === undefined) {
@@ -28,7 +29,8 @@ const MainPage: React.FC = () => {
                     return;
                 }
 
-                console.log(response)
+                console.log(response);
+                sessionIdRef.current = response.id;
                 setMessages(response.conversation_history);
                 setSteps(response.steps);
                 setIsLoading(false);
@@ -65,12 +67,14 @@ const MainPage: React.FC = () => {
         return (
             <>
                 {steps.map((value: string, index: number) => (
-                    <SequenceStep
-                        key={index}
-                        setSteps={setSteps}
-                        steps={steps}
-                        content={value}
-                    />
+                        <SequenceStep
+                            index={index}
+                            setSteps={setSteps}
+                            steps={steps}
+                            content={value}
+                            conversation={messages}
+                            sessionId={sessionIdRef}
+                        />
                 ))}
             </>
         );
