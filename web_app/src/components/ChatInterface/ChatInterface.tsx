@@ -5,11 +5,13 @@ import styles from "./ChatInterface.module.css";
 import { chatResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import { CircularProgress } from "@mui/material";
+import { User } from "@auth0/auth0-react";
 interface ChatInterfaceProps {
     messages: string[];
     steps: string[];
     setMessages: React.Dispatch<string[]>;
     setSteps: React.Dispatch<string[]>;
+    user: User | undefined
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -17,10 +19,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     steps,
     setMessages,
     setSteps,
+    user
 }: ChatInterfaceProps) => {
     const [currentMessage, setCurrentMessage] = useState<string>("");
     const [waitingForResponse, setWaitingForResponse] =
         useState<boolean>(false);
+
+    const initialMessage: string = "Hi! I'm Helix, an agent designed to help you generate recruiting outreach sequences. Please tell me about the role you are trying to hire for."
 
     function renderChat() {
         return (
@@ -52,7 +57,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                             setWaitingForResponse(true);
                             setCurrentMessage("");
 
-                            ApiClient.chat(mostRecentConversation, steps).then(
+                            ApiClient.chat(mostRecentConversation, steps, user).then(
                                 (response: chatResponse | null) => {
                                     if (response == null) {
                                         // TODO: Show alert saying that chat request failed
@@ -95,8 +100,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     return (
         <div className={styles["chatContainer"]}>
             <div className={styles["messagesContainer"]}>
+                {renderMessage(initialMessage, 0)}
                 {messages?.map((value: string, index: number) =>
-                    renderMessage(value, index)
+                    renderMessage(value, index + 1)
                 )}
                 <div
                     className={`${styles["message"]} ${styles["loadingMessage"]}`}

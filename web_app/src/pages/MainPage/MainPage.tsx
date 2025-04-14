@@ -1,7 +1,7 @@
 import styles from "./MainPage.module.css";
 import React, { useEffect, useState } from "react";
 import SequenceStep from "../../components/SequenceStep/SequenceStep";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, User } from "@auth0/auth0-react";
 import { statusResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
@@ -21,7 +21,23 @@ const MainPage: React.FC = () => {
             return;
         }
 
-        const addNewUserToDB: () => Promise<void> = async () => {
+        const fetchSession: (user: User) => Promise<void> = async (user) => {
+            ApiClient.getHelixSession(user).then((response) => {
+                if (response == null) {
+                    console.log("Error fetching session");
+                    return;
+                }
+
+                console.log(response)
+                setMessages(response.conversation_history);
+                setSteps(response.steps);
+                setIsLoading(false);
+
+                return true;
+            });
+        };
+
+        const checkIfUserInDb: () => Promise<void> = async () => {
             const claims = await getIdTokenClaims();
             console.log("claims:", claims);
             console.log(
@@ -38,10 +54,11 @@ const MainPage: React.FC = () => {
                 );
                 console.log(payload);
             }
-            setIsLoading(false);
+
+            fetchSession(user);
         };
 
-        addNewUserToDB();
+        checkIfUserInDb();
     }, [getIdTokenClaims, user]);
 
     function renderSequenceSteps() {
@@ -76,6 +93,7 @@ const MainPage: React.FC = () => {
                     steps={steps}
                     setMessages={setMessages}
                     setSteps={setSteps}
+                    user={user}
                 />
 
                 <div className={styles["workspaceContainer"]}>

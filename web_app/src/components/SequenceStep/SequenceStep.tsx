@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SequenceStep.module.css";
-import { TextField } from "@mui/material";
 
 interface SequenceStepProps {
     key: number;

@@ -4,12 +4,22 @@ interface addUserRequest {
 }
 
 interface getUserRequest {
-    email: string
+    email: string;
 }
 
 interface chatRequest {
-    conversation: string[]
-    steps: string[]
+    conversation: string[];
+    steps: string[];
+    email: string;
 }
 
-export type {addUserRequest, getUserRequest, chatRequest}
+interface helixSessionRequest {
+    email: string
+}
+
+export type {
+    addUserRequest,
+    getUserRequest,
+    chatRequest,
+    helixSessionRequest,
+};

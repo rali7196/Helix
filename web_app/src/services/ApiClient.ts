@@ -1,8 +1,20 @@
-import { chatResponse, statusResponse } from "../types/responses";
-import { addUserRequest, chatRequest, getUserRequest } from "../types/requests";
+import {
+    chatResponse,
+    helixSessionResponse,
+    statusResponse,
+    userResponse,
+} from "../types/responses";
+import {
+    addUserRequest,
+    chatRequest,
+    getUserRequest,
+    helixSessionRequest,
+} from "../types/requests";
+import { User } from "@auth0/auth0-react";
 
 class ApiClient {
-    private static apiUrl = import.meta.env.VITE_API_URL;
+    // set this to true to use the docker container IP address
+    private static apiUrl = false ? import.meta.env.VITE_API_URL : "http://127.0.0.1:5000";
 
     static async addUser(
         name: string,
@@ -32,7 +44,7 @@ class ApiClient {
     }
 
     static async getUser(email: string) {
-        if (email === null || email === undefined) {
+        if (email == null) {
             return null;
         }
 
@@ -40,7 +52,7 @@ class ApiClient {
             email: email,
         };
 
-        const response: statusResponse = await fetch(
+        const response: userResponse = await fetch(
             `${ApiClient.apiUrl}/userManagement/getUser`,
             {
                 method: "POST",
@@ -56,19 +68,44 @@ class ApiClient {
 
     static async chat(
         conversation: string[],
-        steps: string[]
+        steps: string[],
+        user: User | undefined
     ): Promise<chatResponse | null> {
-        if (conversation == null) {
+        if (conversation == null || user == null) {
             return null;
         }
 
         const request: chatRequest = {
             conversation: conversation,
             steps: steps,
+            email: user.email!,
         };
 
         const response: chatResponse = await fetch(
             `${ApiClient.apiUrl}/llmManagement/chat`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(request),
+            }
+        ).then((response) => response.json());
+
+        return response;
+    }
+
+    static async getHelixSession(user: User) {
+        if (user == null || user.email == null) {
+            return null;
+        }
+
+        const request: helixSessionRequest = {
+            email: user.email,
+        };
+
+        const response: helixSessionResponse = await fetch(
+            `${ApiClient.apiUrl}/userManagement/getHelixSession`,
             {
                 method: "POST",
                 headers: {
