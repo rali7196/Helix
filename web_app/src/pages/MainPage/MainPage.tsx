@@ -106,8 +106,8 @@ const MainPage: React.FC = () => {
                     })
                 }
                 style={{
-                    color:"white",
-                    backgroundColor:"grey"
+                    color: "white",
+                    backgroundColor: "grey",
                 }}
             >
                 Log Out
@@ -121,7 +121,6 @@ const MainPage: React.FC = () => {
                     setSteps={setSteps}
                     user={user}
                 />
-
                 <div className={styles["workspaceContainer"]}>
                     {renderSequenceSteps()}
                 </div>
