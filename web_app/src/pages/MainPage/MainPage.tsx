@@ -4,9 +4,9 @@ import SequenceStep from "../../components/SequenceStep/SequenceStep";
 import { useAuth0, User } from "@auth0/auth0-react";
 import { statusResponse } from "../../types/responses";
 import ApiClient from "../../services/ApiClient";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import { Button, CircularProgress, Snackbar } from "@mui/material";
 import ChatInterface from "../../components/ChatInterface/ChatInterface";
+import { useNavigate } from "react-router-dom";
 
 const MainPage: React.FC = () => {
     const { user, getIdTokenClaims, logout } = useAuth0();
@@ -17,7 +17,7 @@ const MainPage: React.FC = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const sessionIdRef = useRef("");
-
+    
     useEffect(() => {
         if (user === null || user === undefined) {
             return;

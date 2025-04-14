@@ -17,6 +17,8 @@ def chat():
     sequence = data['steps']
     email = data['email']
 
+    print(sequence)
+
     OpenAiClient = OpenAI()
     helixAgent = HelixAgent(client = OpenAiClient, conversation = conversation, sequence = sequence)
     

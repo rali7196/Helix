@@ -53,7 +53,8 @@ class HelixAgent:
             {json.dumps(self.known_info, indent=2)}
 
             Your job is to:
-            1. Extract any new relevant information from the conversation or steps.
+            1. Extract any new relevant information from the conversation or steps. Make sure to scan the steps for any updated info, and unless 
+                the most recent message is requesting a change to the steps, you should prioritize extracting the information from the steps
             2. Fill in or update the `known_info` object where appropriate.
             3. Keep existing values if there's no new or better information.
             4. Return a complete `known_info` object in JSON format — no explanations or extra text.

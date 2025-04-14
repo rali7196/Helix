@@ -28,8 +28,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     const initialMessage: string =
         "Hi! I'm Helix, an agent designed to help you generate recruiting outreach sequences. Please tell me about the role you are trying to hire for.";
 
-
-
     function renderChat() {
         return (
             <div className={styles["textFieldContainer"]}>
