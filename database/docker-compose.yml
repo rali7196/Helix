@@ -13,3 +13,8 @@ services:
  
 volumes:
   pgdata:
+
+networks:
+  helix-network:
+    external:
+      true

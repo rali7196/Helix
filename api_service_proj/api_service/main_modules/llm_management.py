@@ -4,9 +4,9 @@ from openai import OpenAI
 import re
 import json
 
-from.agent.core.helix_agent import HelixAgent
-from .database_client.database_client import Database_Client
-from .data_models.session import HelixSession
+from ..agent.core.helix_agent import HelixAgent
+from ..database_client.database_client import Database_Client
+from ..data_models.session import HelixSession
 
 bp = Blueprint("llm_management", __name__, url_prefix="/llmManagement")
 

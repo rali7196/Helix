@@ -2,9 +2,9 @@ from flask import (g, jsonify, request, Blueprint)
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from . import db
-from .database_client.database_client import Database_Client
-from .data_models.session import HelixSession
+from .. import db
+from ..database_client.database_client import Database_Client
+from ..data_models.session import HelixSession
 
 bp = Blueprint('user_management', __name__, url_prefix='/userManagement')
 @bp.route('/addUser', methods=['POST'])

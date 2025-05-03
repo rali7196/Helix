@@ -2,10 +2,11 @@
 import click
 from sqlalchemy import create_engine
 from flask import g
+import os
 
 def get_db():
     if 'engine' not in g:
-        g.engine = create_engine("postgresql://postgres:example123@localhost:5432/helix")
+        g.engine = create_engine("postgresql://postgres:example123@db:5432/helix")
     return g.engine 
 
 @click.command('init-db')
